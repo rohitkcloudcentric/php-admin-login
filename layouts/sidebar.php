@@ -20,6 +20,10 @@
                     <a href="../dashboard/company-profile.php" class="pc-link"><span class="pc-micon"><i
                                 class="ti ti-building"></i></span><span class="pc-mtext">Company Profile</span></a>
                 </li>
+                <li class="pc-item">
+                    <a href="../dashboard/users.php" class="pc-link"><span class="pc-micon"><i
+                                class="ti ti-users"></i></span><span class="pc-mtext">Users</span></a>
+                </li>
 
 
 

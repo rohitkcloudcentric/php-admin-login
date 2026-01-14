@@ -1,168 +1,106 @@
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <?php
 session_start();
 require '../config/db.php';
 require '../helpers/audit.php';
-
-/* Auth protection */
-if (!isset($_SESSION['admin_id'])) {
-    header("Location: login.php");
-    exit;
-}
-
-/* Fetch companies */
-
-
-$companyId = (int) ($_GET['id'] ?? 0);
-
-if ($companyId <= 0) {
-    die('Invalid company ID');
-}
-
-/* Fetch company details */
-$stmt = $pdo->prepare("
-    SELECT id, name, email, phone, address, image, created_at
-    FROM companies
-    WHERE id = ?
-      AND deleted_at IS NULL
-    LIMIT 1
-");
-
-$stmt->execute([$companyId]);
-$company = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$company) {
-    die('Company not found');
-}
-
-?>
-
-<?php
-
-// Protect admin
 require '../auth.php';
 
-// Page variables
-$pageTitle = "Company Details";
-$activeMenu = "company-details";
+$pageTitle = "All Users";
+$activeMenu = "users";
 
-// Load layout
+// Fetch all users with company details
+$sql = "
+    SELECT u.*, c.name as company_name 
+    FROM users u 
+    LEFT JOIN companies c ON u.company_id = c.id 
+    WHERE u.deleted_at IS NULL 
+    ORDER BY u.created_at DESC
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 require '../layouts/app.php';
-
-
 ?>
-
-<style>
-    .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-
-    @media (max-width: 768px) {
-        .desktop-only {
-            display: none;
-        }
-    }
-</style>
-
-
 
 <div class="pc-container">
     <div class="pc-content">
         <div class="container py-4">
 
-            <!-- Company Info -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <img src="<?= $company['image'] ? 'uploads/companies/' . htmlspecialchars($company['image']) : '../assets/images/company-default.jpg'; ?>"
-                        class="rounded-circle" width="70" height="70">
-                    <div>
-                        <h5 class="mb-0 fw-bold"><?= htmlspecialchars($company['name']); ?></h5>
-                        <small class="text-muted"><?= htmlspecialchars($company['email'] ?? '-'); ?> ·
-                            <?= htmlspecialchars($company['phone'] ?? '-'); ?></small>
-                        <div class="text-muted"><?= htmlspecialchars($company['address'] ?? '-'); ?></div>
-                    </div>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">All Users</h4>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                    <i class="ti ti-plus me-1"></i> Add User
+                </button>
+            </div>
+
+            <?php if (!empty($_SESSION['success'])): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <?= $_SESSION['success'];
+                    unset($_SESSION['success']); ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            </div>
+            <?php endif; ?>
 
-            <!-- Users Header -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0 fw-bold">Company Users</h5>
-                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">+ Add User</button>
-            </div>
+            <?php if (!empty($_SESSION['error'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $_SESSION['error'];
+                    unset($_SESSION['error']); ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
 
-            <!-- Users Table -->
-            <div class="card shadow">
+            <div class="card shadow-sm">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
                                 <th>User</th>
-                                <th class="desktop-only">Email</th>
-                                <th class="desktop-only">Phone</th>
+                                <th>Email</th>
+                                <th>Company</th>
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th class="text-end">Actions</th>
                             </tr>
                         </thead>
-
                         <tbody>
-
-                            <!-- User Row (Placeholder for now, later to be dynamic) -->
-                            <?php
-                            // Fetch users for this company
-                            $userStmt = $pdo->prepare("SELECT * FROM users WHERE company_id = ? AND deleted_at IS NULL");
-                            $userStmt->execute([$companyId]);
-                            $users = $userStmt->fetchAll(PDO::FETCH_ASSOC);
-
-                            if (count($users) > 0):
-                                foreach ($users as $user):
-                            ?>
+                            <?php if (count($users) > 0): ?>
+                                <?php foreach ($users as $user): ?>
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center gap-2">
-                                                <div class="avatar bg-light d-flex align-items-center justify-content-center text-primary fw-bold">
-                                                    <img src="<?= $user['image'] ? 'uploads/users/' . htmlspecialchars($user['image']) : 'uploads/users/default-user.jpg'; ?>"
-                                                        class="rounded-circle" width="40" height="40">
-                                                </div>
-                                                <div>
-                                                    <div class="fw-semibold"><?= htmlspecialchars($user['name']); ?></div>
-                                                    <small class="text-muted d-block d-md-none"><?= htmlspecialchars($user['email']); ?></small>
-                                                </div>
+                                                <img src="<?= $user['image'] ? 'uploads/users/' . htmlspecialchars($user['image']) : 'uploads/users/default-user.jpg'; ?>"
+                                                    class="rounded-circle object-fit-cover" width="35" height="35" alt="User">
+                                                <div class="fw-semibold"><?= htmlspecialchars($user['name']); ?></div>
                                             </div>
                                         </td>
-
-                                        <td class="desktop-only"><?= htmlspecialchars($user['email']); ?></td>
-                                        <td class="desktop-only"><?= htmlspecialchars($user['phone'] ?? '-'); ?></td>
-
+                                        <td><?= htmlspecialchars($user['email']); ?></td>
                                         <td>
-                                            <?php if ($user['role'] == 'admin'): ?>
-                                                <span class="badge bg-primary">Admin</span>
-                                            <?php else: ?>
-                                                <span class="badge bg-secondary">User</span>
-                                            <?php endif; ?>
+                                            <a href="company-details.php?id=<?= $user['company_id']; ?>">
+                                                <?= htmlspecialchars($user['company_name'] ?? 'N/A'); ?>
+                                            </a>
                                         </td>
-
                                         <td>
-                                            <span class="badge bg-success">Active</span>
+                                            <span class="badge bg-<?= $user['role'] == 'admin' ? 'primary' : 'secondary'; ?>">
+                                                <?= ucfirst($user['role']); ?>
+                                            </span>
                                         </td>
-
+                                        <td>
+                                            <span class="badge bg-<?= $user['status'] == 'active' ? 'success' : 'warning'; ?>">
+                                                <?= ucfirst($user['status']); ?>
+                                            </span>
+                                        </td>
                                         <td class="text-end">
                                             <a href="user-details.php?id=<?= $user['id']; ?>" class="btn btn-sm btn-outline-primary">View</a>
                                             <a href="user-details.php?id=<?= $user['id']; ?>&edit=1" class="btn btn-sm btn-outline-warning">Edit</a>
-                                            <button class="btn btn-sm btn-outline-danger" onclick="confirmDeleteUser(<?= $user['id']; ?>, <?= $companyId; ?>, '<?= htmlspecialchars($user['name']); ?>')">Remove</button>
+                                            <button class="btn btn-sm btn-outline-danger" onclick="confirmDeleteUser(<?= $user['id']; ?>, 0, '<?= htmlspecialchars($user['name']); ?>')">Delete</button>
                                         </td>
                                     </tr>
-                                <?php endforeach;
-                            else: ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
                                 <tr>
-                                    <td colspan="6" class="text-center py-4 text-muted">No users found for this company.</td>
+                                    <td colspan="6" class="text-center py-4 text-muted">No users found.</td>
                                 </tr>
                             <?php endif; ?>
-
                         </tbody>
                     </table>
                 </div>
@@ -184,12 +122,12 @@ require '../layouts/app.php';
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Company</label>
-                        <select name="company_id" class="form-select">
+                        <select name="company_id" class="form-select" required>
+                            <option value="">Select Company</option>
                             <?php
                             $compStmt = $pdo->query("SELECT id, name FROM companies WHERE deleted_at IS NULL ORDER BY name ASC");
                             while ($row = $compStmt->fetch(PDO::FETCH_ASSOC)) {
-                                $selected = ($row['id'] == $companyId) ? 'selected' : '';
-                                echo "<option value=\"{$row['id']}\" $selected>" . htmlspecialchars($row['name']) . "</option>";
+                                echo "<option value=\"{$row['id']}\">" . htmlspecialchars($row['name']) . "</option>";
                             }
                             ?>
                         </select>
@@ -262,7 +200,7 @@ require '../layouts/app.php';
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                 <form action="delete_user_process.php" method="POST">
                     <input type="hidden" name="user_id" id="deleteUserId">
-                    <input type="hidden" name="company_id" id="deleteUserCompanyId">
+                    <input type="hidden" name="company_id" id="deleteUserCompanyId" value="0">
                     <button type="submit" class="btn btn-danger">Confirm Delete</button>
                 </form>
             </div>
