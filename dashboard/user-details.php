@@ -1,8 +1,8 @@
 <?php
 session_start();
 require '../config/db.php';
-require '../helpers/audit.php';
-require '../auth.php';
+require '../src/helpers/audit.php';
+require '../includes/auth_check.php';
 
 $pageTitle = "User Details";
 $activeMenu = "companies"; // Highlight companies logic or create new menu
@@ -44,7 +44,7 @@ require '../layouts/app.php';
                 <div class="card-body">
                     <div class="d-flex align-items-center gap-4">
                         <div class="flex-shrink-0">
-                            <img src="<?= $user['image'] ? 'uploads/users/' . htmlspecialchars($user['image']) : 'uploads/users/default-user.jpg'; ?>"
+                            <img src="<?= $user['image'] ? '../uploads/users/' . htmlspecialchars($user['image']) : '../uploads/users/default-user.jpg'; ?>"
                                 class="rounded-circle object-fit-cover" width="100" height="100" alt="User Image">
                         </div>
                         <div class="flex-grow-1">
@@ -119,7 +119,7 @@ require '../layouts/app.php';
                 <h5 class="modal-title fw-bold">Edit User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="edit_user_process.php" method="POST" enctype="multipart/form-data">
+            <form action="../actions/users/edit.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="user_id" value="<?= $user['id']; ?>">
                     <input type="hidden" name="existing_image" value="<?= htmlspecialchars($user['image'] ?? ''); ?>">
@@ -173,7 +173,7 @@ require '../layouts/app.php';
                         <label class="form-label">Profile Image</label>
                         <?php if ($user['image']): ?>
                             <div class="mb-2">
-                                <img src="uploads/users/<?= htmlspecialchars($user['image']); ?>" width="50" class="rounded">
+                                <img src="../uploads/users/<?= htmlspecialchars($user['image']); ?>" width="50" class="rounded">
                             </div>
                         <?php endif; ?>
                         <input type="file" name="image" class="form-control" accept="image/*">
@@ -208,7 +208,7 @@ require '../layouts/app.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                <form action="delete_user_process.php" method="POST">
+                <form action="../actions/users/delete.php" method="POST">
                     <input type="hidden" name="user_id" value="<?= $user['id']; ?>">
                     <input type="hidden" name="company_id" value="<?= $user['company_id']; ?>">
                     <button type="submit" class="btn btn-danger">Confirm Delete</button>

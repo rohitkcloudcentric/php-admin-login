@@ -1,7 +1,7 @@
 <?php
 session_start();
-require '../config/db.php';
-require '../helpers/audit.php';
+require '../../config/db.php';
+require '../../src/helpers/audit.php';
 
 $companyId = (int) $_POST['company_id'];
 $adminId  = $_SESSION['admin_id'];

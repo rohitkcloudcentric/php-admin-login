@@ -1,11 +1,11 @@
 <?php
 session_start();
-require '../config/db.php';
-require '../helpers/audit.php';
+require '../../config/db.php';
+require '../../src/helpers/audit.php';
 
 // Auth protection
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: ../login.php");
+    header("Location: ../../index.php");
     exit;
 }
 
@@ -26,12 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['user_id'])) {
 
     // Redirect back to company details or users list
     if ($companyId > 0) {
-        header("Location: company-details.php?id=" . $companyId);
+        header("Location: ../../dashboard/company-details.php?id=" . $companyId);
     } else {
-        header("Location: users.php");
+        header("Location: ../../dashboard/users.php");
     }
     exit;
 } else {
-    header("Location: index.php");
+    header("Location: ../../dashboard/index.php");
     exit;
 }

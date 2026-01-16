@@ -1,5 +1,3 @@
-
-
 <?php
 session_start();
 
@@ -62,22 +60,22 @@ if (isset($_SESSION['admin_id'])) {
             <div class="auth-form">
                 <div class="card mt-5 mb-5">
                     <?php if (!empty($_SESSION['error'])): ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <?= htmlspecialchars($_SESSION['error']); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    <?php unset($_SESSION['error']); ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?= htmlspecialchars($_SESSION['error']); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php unset($_SESSION['error']); ?>
                     <?php endif; ?>
 
                     <?php if (!empty($_SESSION['success'])): ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?= htmlspecialchars($_SESSION['success']); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    <?php unset($_SESSION['success']); ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?= htmlspecialchars($_SESSION['success']); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php unset($_SESSION['success']); ?>
                     <?php endif; ?>
 
-                    <form action="admin-register.php" method="POST">
+                    <form action="actions/auth/register.php" method="POST">
                         <div class="card-body">
                             <a href="#" class="d-flex justify-content-center mt-3">
                                 <img src="assets/images/logo-dark.svg" alt="image" class="img-fluid brand-logo" />
@@ -155,27 +153,27 @@ if (isset($_SESSION['admin_id'])) {
 
 
     <script>
-    layout_change('light');
+        layout_change('light');
     </script>
 
     <script>
-    font_change('Roboto');
+        font_change('Roboto');
     </script>
 
     <script>
-    change_box_container('false');
+        change_box_container('false');
     </script>
 
     <script>
-    layout_caption_change('true');
+        layout_caption_change('true');
     </script>
 
     <script>
-    layout_rtl_change('false');
+        layout_rtl_change('false');
     </script>
 
     <script>
-    preset_change('preset-1');
+        preset_change('preset-1');
     </script>
 
 

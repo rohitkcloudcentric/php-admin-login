@@ -21,7 +21,7 @@ if ($stmt->rowCount() === 0) {
 </head>
 <body>
 
-<form action="reset_password_process.php" method="POST">
+<form action="actions/auth/reset_password.php" method="POST">
     <input type="hidden" name="token" value="<?= htmlspecialchars($token); ?>">
     <input type="password" name="password" placeholder="New Password" required>
     <button>Reset Password</button>

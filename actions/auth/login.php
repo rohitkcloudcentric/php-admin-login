@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config/db.php';
+require '../../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -10,14 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /* 1️⃣ Empty field validation */
     if ($email === '' || $pass === '') {
         $_SESSION['error'] = "Email and password are required.";
-        header("Location: index.php");
+        header("Location: ../../index.php");
         exit;
     }
 
     /* 2️⃣ Email format validation */
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['error'] = "Please enter a valid email address.";
-        header("Location: index.php");
+        header("Location: ../../index.php");
         exit;
     }
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /* 4️⃣ Validate credentials */
     if (!$admin || !password_verify($pass, $admin['password'])) {
         $_SESSION['error'] = "Invalid email or password.";
-        header("Location: index.php");
+        header("Location: ../../index.php");
         exit;
     }
 
@@ -47,6 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $_SESSION['success'] = "Welcome back, {$admin['name']}!";
 
-    header("Location: dashboard/index.php");
+    header("Location: ../../dashboard/index.php");
     exit;
 }

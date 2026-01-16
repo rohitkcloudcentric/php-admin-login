@@ -2,7 +2,7 @@
 session_start();
 
 // Protect admin
-require '../auth.php';
+require '../includes/auth_check.php';
 
 // Page variables
 $pageTitle = "Company Profile";
@@ -118,7 +118,7 @@ body {
                     <div class="card profile-card p-4 mt-4">
                         <h5 class="mb-4">Change Password</h5>
 
-                        <form action="../update_password.php" method="POST">
+                        <form action="../actions/auth/update_password.php" method="POST">
                             <div class="mb-3">
                                 <label class="form-label">Current Password</label>
                                 <input type="password" class="form-control" placeholder="Enter current password"

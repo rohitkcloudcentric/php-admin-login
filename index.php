@@ -47,19 +47,19 @@ if (isset($_SESSION['admin_id'])) {
 
 <body>
     <?php if (!empty($_SESSION['success'])): ?>
-    <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert"
-            aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <?= htmlspecialchars($_SESSION['success']); ?>
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert"
+                aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <?= htmlspecialchars($_SESSION['success']); ?>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
             </div>
         </div>
-    </div>
-    <?php unset($_SESSION['success']); ?>
+        <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
 
     <!-- [ Pre-loader ] start -->
@@ -76,14 +76,14 @@ if (isset($_SESSION['admin_id'])) {
 
 
                     <?php if (!empty($_SESSION['error'])): ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <?= htmlspecialchars($_SESSION['error']); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                    <?php unset($_SESSION['error']); ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?= htmlspecialchars($_SESSION['error']); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        <?php unset($_SESSION['error']); ?>
                     <?php endif; ?>
 
-                    <form action="admin-login.php" method="POST">
+                    <form action="actions/auth/login.php" method="POST">
                         <div class="card-body">
                             <!-- <a href="#" class="d-flex justify-content-center">
                                 <img src="assets/images/logo-dark.svg" alt="image" class="img-fluid brand-logo">
@@ -147,34 +147,34 @@ if (isset($_SESSION['admin_id'])) {
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/plugins/feather.min.js"></script>
     <script>
-    layout_change('light');
+        layout_change('light');
     </script>
     <script>
-    font_change('Roboto');
+        font_change('Roboto');
     </script>
     <script>
-    change_box_container('false');
+        change_box_container('false');
     </script>
     <script>
-    layout_caption_change('true');
+        layout_caption_change('true');
     </script>
     <script>
-    layout_rtl_change('false');
+        layout_rtl_change('false');
     </script>
     <script>
-    preset_change('preset-1');
+        preset_change('preset-1');
     </script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var toastEl = document.getElementById('successToast');
-        if (toastEl) {
-            var toast = new bootstrap.Toast(toastEl, {
-                delay: 4000 // 4 seconds
-            });
-            toast.show();
-        }
-    });
+        document.addEventListener('DOMContentLoaded', function() {
+            var toastEl = document.getElementById('successToast');
+            if (toastEl) {
+                var toast = new bootstrap.Toast(toastEl, {
+                    delay: 4000 // 4 seconds
+                });
+                toast.show();
+            }
+        });
     </script>
 
 </body>

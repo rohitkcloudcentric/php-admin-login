@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config/db.php';
+require '../../config/db.php';
 
 $token = $_POST['token'];
 $password = $_POST['password'];
@@ -20,5 +20,5 @@ $stmt = $pdo->prepare(
 $stmt->execute([$hash, $token]);
 
 $_SESSION['success'] = "Password reset successful. Please login.";
-header("Location: login.php");
+header("Location: ../../index.php");
 exit;

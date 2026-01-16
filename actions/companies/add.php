@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require '../config/db.php';
-require '../helpers/audit.php';
+require '../../config/db.php';
+require '../../src/helpers/audit.php';
 
 header('Content-Type: application/json');
 
@@ -60,7 +60,7 @@ if (!empty($_FILES['image']['name'])) {
         exit;
     }
 
-    $uploadDir = '../uploads/companies/';
+    $uploadDir = '../../uploads/companies/';
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
@@ -112,7 +112,6 @@ try {
         'message' => 'Company added successfully'
     ]);
     exit;
-
 } catch (Exception $e) {
     $pdo->rollBack();
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config/db.php';
+require '../../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -12,14 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // 1️⃣ Required fields validation
     if (!$name || !$last_name || !$email || !$pass) {
         $_SESSION['error'] = "All fields are required.";
-        header("Location: register.php");
+        header("Location: ../../register.php");
         exit;
     }
 
     // 2️⃣ Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['error'] = "Invalid email address.";
-        header("Location: register.php");
+        header("Location: ../../register.php");
         exit;
     }
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($check->rowCount() > 0) {
         $_SESSION['error'] = "Email address already exists.";
-        header("Location: register.php");
+        header("Location: ../../register.php");
         exit;
     }
 
@@ -44,6 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute([$name, $last_name, $email, $hashed, $pass]);
 
     $_SESSION['success'] = "Admin created successfully.";
-    header("Location: index.php");
+    header("Location: ../../index.php");
     exit;
 }

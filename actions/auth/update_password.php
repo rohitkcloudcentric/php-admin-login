@@ -1,10 +1,10 @@
 <?php
 session_start();
-require 'config/db.php';
+require '../../config/db.php';
 
 /* Auth check */
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: index.php");
+    header("Location: ../../index.php");
     exit;
 }
 
@@ -19,21 +19,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /* 1️⃣ Validate empty fields */
     if ($current === '' || $new === '' || $confirm === '') {
         $_SESSION['error'] = "All fields are required.";
-        header("Location: dashboard/profile.php");
+        header("Location: ../../dashboard/profile.php");
         exit;
     }
 
     /* 2️⃣ Password length check */
     if (strlen($new) < 6) {
         $_SESSION['error'] = "New password must be at least 6 characters.";
-        header("Location: dashboard/profile.php");
+        header("Location: ../../dashboard/profile.php");
         exit;
     }
 
     /* 3️⃣ Match new & confirm password */
     if ($new !== $confirm) {
         $_SESSION['error'] = "New password and confirm password do not match.";
-        header("Location: dashboard/profile.php");
+        header("Location: ../../dashboard/profile.php");
         exit;
     }
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$admin || !password_verify($current, $admin['password'])) {
         $_SESSION['error'] = "Current password is incorrect.";
-        header("Location: dashboard/profile.php");
+        header("Location: ../../dashboard/profile.php");
         exit;
     }
 

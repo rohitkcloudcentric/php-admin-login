@@ -21,7 +21,7 @@ session_start();
     <?php unset($_SESSION['success']); ?>
 <?php endif; ?>
 
-<form action="forgot_password_process.php" method="POST">
+<form action="actions/auth/forgot_password.php" method="POST">
     <div class="mb-3">
         <label>Email</label>
         <input type="email" name="email" class="form-control" required>

@@ -1,5 +1,5 @@
 <?php
-require '../auth.php';
+require '../includes/auth_check.php';
 
 ?>
 <?php
@@ -328,7 +328,7 @@ if (!isset($_SESSION['admin_id'])) {
                                         <i class="ti ti-user"></i>
                                         <span>Social Profile</span>
                                     </a>
-                                    <a href="../logout.php" class="dropdown-item">
+                                    <a href="../actions/auth/logout.php" class="dropdown-item">
                                         <i class="ti ti-logout"></i>
                                         <span>Logout</span>
                                     </a>

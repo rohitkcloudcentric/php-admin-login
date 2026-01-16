@@ -1,12 +1,12 @@
 <?php
 session_start();
-require 'config/db.php';
+require '../../config/db.php';
 
 $email = trim($_POST['email']);
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = "Invalid email address.";
-    header("Location: forgot_password.php");
+    header("Location: ../../forgot_password.php");
     exit;
 }
 
@@ -16,7 +16,7 @@ $stmt->execute([$email]);
 
 if ($stmt->rowCount() === 0) {
     $_SESSION['error'] = "Email not registered.";
-    header("Location: forgot_password.php");
+    header("Location: ../../forgot_password.php");
     exit;
 }
 
@@ -31,11 +31,11 @@ $update = $pdo->prepare(
 $update->execute([$token, $expires, $email]);
 
 /* Reset link */
-$resetLink = "/reset_password.php?token=" . $token;
+$resetLink = "reset_password.php?token=" . $token;
 
 /* Send email (basic) */
 mail($email, "Password Reset", "Reset your password: $resetLink");
 
 $_SESSION['success'] = "Password reset link sent to your email.";
-header("Location: forgot_password.php");
+header("Location: ../../forgot_password.php");
 exit;

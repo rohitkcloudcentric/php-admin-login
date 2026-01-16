@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require '../config/db.php';
-require '../helpers/audit.php';
+require '../../config/db.php';
+require '../../src/helpers/audit.php';
 
 // ✅ Validate request
 if (!isset($_POST['company_id'])) {
@@ -26,7 +26,7 @@ $imagePath = null;
 ================================ */
 if (!empty($_FILES['image']['name'])) {
 
-    $allowed = ['jpg','jpeg','png','webp'];
+    $allowed = ['jpg', 'jpeg', 'png', 'webp'];
     $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
 
     if (!in_array($ext, $allowed)) {
@@ -46,14 +46,14 @@ if (!empty($_FILES['image']['name'])) {
     }
 
     $imageName = 'company_' . time() . '.' . $ext;
-    $uploadDir = '../uploads/company/';
+    $uploadDir = '../../uploads/companies/';
 
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
 
     move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $imageName);
-    $imagePath = 'uploads/company/' . $imageName;
+    $imagePath = $imageName; // Store only filename to match users behavior or store relative path?
 }
 
 /* ===============================

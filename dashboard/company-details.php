@@ -3,11 +3,11 @@
 <?php
 session_start();
 require '../config/db.php';
-require '../helpers/audit.php';
+require '../src/helpers/audit.php';
 
 /* Auth protection */
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: login.php");
+    header("Location: ../index.php");
     exit;
 }
 
@@ -41,7 +41,7 @@ if (!$company) {
 <?php
 
 // Protect admin
-require '../auth.php';
+require '../includes/auth_check.php';
 
 // Page variables
 $pageTitle = "Company Details";
@@ -77,7 +77,7 @@ require '../layouts/app.php';
             <!-- Company Info -->
             <div class="card shadow-sm mb-4">
                 <div class="card-body d-flex align-items-center gap-3">
-                    <img src="<?= $company['image'] ? 'uploads/companies/' . htmlspecialchars($company['image']) : '../assets/images/company-default.jpg'; ?>"
+                    <img src="<?= $company['image'] ? '../uploads/companies/' . htmlspecialchars($company['image']) : '../assets/images/company-default.jpg'; ?>"
                         class="rounded-circle" width="70" height="70">
                     <div>
                         <h5 class="mb-0 fw-bold"><?= htmlspecialchars($company['name']); ?></h5>
@@ -125,7 +125,7 @@ require '../layouts/app.php';
                                         <td>
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="avatar bg-light d-flex align-items-center justify-content-center text-primary fw-bold">
-                                                    <img src="<?= $user['image'] ? 'uploads/users/' . htmlspecialchars($user['image']) : 'uploads/users/default-user.jpg'; ?>"
+                                                    <img src="<?= $user['image'] ? '../uploads/users/' . htmlspecialchars($user['image']) : '../uploads/users/default-user.jpg'; ?>"
                                                         class="rounded-circle" width="40" height="40">
                                                 </div>
                                                 <div>
@@ -180,7 +180,7 @@ require '../layouts/app.php';
                 <h5 class="modal-title fw-bold">Add New User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="add_user_process.php" method="POST" enctype="multipart/form-data">
+            <form action="../actions/users/add.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Company</label>
@@ -260,7 +260,7 @@ require '../layouts/app.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                <form action="delete_user_process.php" method="POST">
+                <form action="../actions/users/delete.php" method="POST">
                     <input type="hidden" name="user_id" id="deleteUserId">
                     <input type="hidden" name="company_id" id="deleteUserCompanyId">
                     <button type="submit" class="btn btn-danger">Confirm Delete</button>

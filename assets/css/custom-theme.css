@@ -1,0 +1,225 @@
+/**
+ * Custom Theme Overrides for Dark/Light Mode
+ * Focus: High Contrast, Clear Readability, Premium Aesthetics
+ */
+
+/* =========================================
+   1. Transitions & Global Settings
+   ========================================= */
+body, 
+.pc-sidebar, 
+.pc-header, 
+.card, 
+.dropdown-menu, 
+.form-control,
+.table,
+.btn,
+.badge,
+.nav-link {
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* =========================================
+   2. Light Theme (High Visibility)
+   ========================================= */
+[data-bs-theme="light"] {
+    --bs-body-bg: #f1f5f9; /* Slate 100 - Crisp light gray */
+    --bs-body-color: #0f172a; /* Slate 900 - Deepest blue-black for max contrast */
+    --bs-secondary-color: #475569; /* Slate 600 */
+    
+    /* Sidebar & Header */
+    --pc-sidebar-background: #ffffff;
+    --pc-header-background: rgba(255, 255, 255, 0.95);
+    --pc-header-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+    /* Borders */
+    --bs-border-color: #e2e8f0; /* Slate 200 */
+}
+
+/* =========================================
+   3. Dark Theme System (High Contrast)
+   ========================================= */
+[data-bs-theme="dark"] {
+    /* Backgrounds: Using extremely dark slate for depth */
+    --bs-body-bg: #020617; /* Slate 950 - Almost black, slightly blue */
+    --bs-body-color: #f1f5f9; /* Slate 100 - Almost white for main text */
+    
+    /* Primary Colors - Brightened for Dark Mode */
+    --bs-primary: #818cf8; /* Indigo 400 - brighter than 500 */
+    --bs-primary-rgb: 129, 140, 248;
+    
+    /* Sidebar */
+    --pc-sidebar-background: #0f172a; /* Slate 900 */
+    --pc-sidebar-color: #e2e8f0; /* Slate 200 */
+    --pc-sidebar-active-color: #ffffff;
+    --pc-sidebar-submenu-border-color: #334155;
+    --pc-sidebar-caption-color: #94a3b8; /* Slate 400 */
+    
+    /* Header */
+    --pc-header-background: rgba(15, 23, 42, 0.9);
+    --pc-header-color: #f8fafc;
+    --pc-header-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    
+    /* Active States */
+    --pc-active-background: #1e293b; /* Slate 800 */
+
+    /* Components */
+    --bs-card-bg: #1e293b; /* Slate 800 */
+    --bs-card-border-color: #334155;
+    --bs-border-color: #334155; /* Slate 700 */
+
+    /* Dropdowns */
+    --bs-dropdown-bg: #1e293b;
+    --bs-dropdown-color: #f1f5f9;
+    --bs-dropdown-border-color: #334155;
+    --bs-dropdown-link-color: #e2e8f0;
+    --bs-dropdown-link-hover-bg: #334155;
+    --bs-dropdown-link-hover-color: #ffffff;
+    
+    /* Forms */
+    --bs-input-bg: #020617; /* Darker than card for input fields */
+    --bs-input-border-color: #475569;
+    --bs-input-color: #ffffff;
+    --bs-input-placeholder-color: #94a3b8;
+    
+    /* Tables */
+    --bs-table-color: #e2e8f0;
+    --bs-table-bg: transparent;
+    --bs-table-border-color: #334155;
+    --bs-table-hover-bg: #334155;
+    --bs-table-striped-bg: #1e293b;
+}
+
+/* =========================================
+   4. Component Overrides
+   ========================================= */
+
+/* Header Glassmorphism */
+.pc-header {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+[data-bs-theme="light"] .pc-header {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Cards */
+.card {
+    border: 1px solid var(--bs-border-color);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+}
+[data-bs-theme="dark"] .card {
+    background-color: var(--bs-card-bg);
+    border-color: #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+/* Ensure Card Headers/Footers blend or pop appropriately */
+[data-bs-theme="dark"] .card-header {
+    border-bottom: 1px solid #334155;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+[data-bs-theme="dark"] .card-footer {
+    border-top: 1px solid #334155;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Headings & Text - Maximum Readability */
+[data-bs-theme="dark"] h1, 
+[data-bs-theme="dark"] h2, 
+[data-bs-theme="dark"] h3, 
+[data-bs-theme="dark"] h4, 
+[data-bs-theme="dark"] h5, 
+[data-bs-theme="dark"] h6,
+[data-bs-theme="dark"] .h1, 
+[data-bs-theme="dark"] .h2, 
+[data-bs-theme="dark"] .h3, 
+[data-bs-theme="dark"] .h4, 
+[data-bs-theme="dark"] .h5, 
+[data-bs-theme="dark"] .h6 {
+    color: #ffffff; /* Pure white for headings */
+    font-weight: 600; /* Slightly bolder for readability */
+}
+[data-bs-theme="dark"] .text-muted {
+    color: #94a3b8 !important; /* Lighter than default muted */
+}
+[data-bs-theme="dark"] .text-dark {
+    color: #f8fafc !important; /* Force 'text-dark' classes to be white in dark mode */
+}
+[data-bs-theme="dark"] .text-body {
+    color: #f1f5f9 !important;
+}
+
+/* Tables */
+[data-bs-theme="dark"] .table > :not(caption) > * > * {
+    background-color: transparent;
+    color: #f1f5f9;
+    border-bottom-color: #334155;
+}
+[data-bs-theme="dark"] .table-light {
+    background-color: #334155; /* Make table headers distinguishable */
+    color: #ffffff;
+}
+[data-bs-theme="dark"] .table-light th {
+    background-color: #1e293b; /* Slightly darker than row hover */
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+/* Form Controls - High Visibility Inputs */
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+    background-color: #020617; /* Very dark background */
+    border-color: #475569; /* Visible border */
+    color: #ffffff;
+}
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+    background-color: #020617;
+    border-color: #818cf8; /* Bright Indigo */
+    box-shadow: 0 0 0 0.25rem rgba(129, 140, 248, 0.25);
+}
+
+/* Utility Overrides */
+[data-bs-theme="dark"] .bg-white {
+    background-color: #1e293b !important;
+}
+[data-bs-theme="dark"] .bg-light {
+    background-color: #334155 !important;
+}
+[data-bs-theme="dark"] .border-0 {
+    border: none !important;
+}
+
+/* 
+   Accents & Badges 
+   Reliant on CSS Variables defined above for consistency
+*/
+[data-bs-theme="dark"] .badge {
+    --bs-badge-color: #fff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 3px;
+}
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Loader */
+[data-bs-theme="dark"] .loader-bg {
+    background-color: #020617;
+}

@@ -1,11 +1,11 @@
 <?php
 session_start();
-require '../config/db.php';
-require '../helpers/audit.php';
+require '../../config/db.php';
+require '../../src/helpers/audit.php';
 
 // Auth protection
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: ../login.php");
+    header("Location: ../../index.php");
     exit;
 }
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
 
         if (in_array($ext, $allowed)) {
-            $uploadDir = 'uploads/users/';
+            $uploadDir = '../../uploads/users/';
 
             // Create directory if it doesn't exist
             if (!is_dir($uploadDir)) {
@@ -107,9 +107,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['error'] = "Database Error: " . $e->getMessage();
     }
 
-    header("Location: user-details.php?id=" . $userId);
+    header("Location: ../../dashboard/user-details.php?id=" . $userId);
     exit;
 } else {
-    header("Location: index.php");
+    header("Location: ../../dashboard/index.php");
     exit;
 }

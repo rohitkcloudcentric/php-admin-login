@@ -19,7 +19,10 @@ var dark_flag = false;
 
 document.addEventListener('DOMContentLoaded', function () {
   if (typeof Storage !== 'undefined') {
-    layout_change(localStorage.getItem('layout'));
+    const layout = localStorage.getItem('layout');
+    if (layout) {
+      layout_change(layout);
+    }
   }
 });
 
@@ -199,9 +202,27 @@ function layout_rtl_change(value) {
   }
 }
 
+function toggle_theme() {
+  let current = localStorage.getItem('layout') || 'light';
+  let next = current === 'dark' ? 'light' : 'dark';
+  layout_change(next);
+  localStorage.setItem('layout', next);
+}
+
 function layout_change(layout) {
   const isDark = layout === 'dark';
   document.body.setAttribute('data-pc-theme', layout);
+  document.body.setAttribute('data-bs-theme', layout);
+
+  // Update theme icon
+  const icon = document.getElementById('theme-icon');
+  if (icon) {
+    if (isDark) {
+      icon.className = 'ti ti-sun';
+    } else {
+      icon.className = 'ti ti-moon';
+    }
+  }
 
   // Update button states
   const activeBtn = document.querySelector('.theme-layout .btn.active');

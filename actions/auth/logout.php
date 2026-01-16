@@ -22,5 +22,5 @@ if (ini_get("session.use_cookies")) {
 }
 
 /* Redirect to login */
-header("Location: index.php");
+header("Location: ../../index.php");
 exit;

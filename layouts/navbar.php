@@ -49,6 +49,11 @@
             <!-- [Mobile Media Block end] -->
             <div class="ms-auto">
                 <ul class="list-unstyled">
+                    <li class="pc-h-item">
+                        <a href="javascript:void(0)" class="pc-head-link head-link-secondary me-0" onclick="toggle_theme()">
+                            <i class="ti ti-moon" id="theme-icon"></i>
+                        </a>
+                    </li>
                     <li class="dropdown pc-h-item">
                         <a class="pc-head-link head-link-secondary dropdown-toggle arrow-none me-0"
                             data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
@@ -131,7 +136,7 @@
                                         <a href="https://codedthemes.com/item/berry-bootstrap-5-admin-template/"
                                             target="_blank" class="btn btn-warning">Buy Now</a>
                                     </div> -->
-                                    
+
                                     <!-- <a href="../application/account-profile-v1.html" class="dropdown-item">
                                         <i class="ti ti-settings"></i>
                                         <span>Settings</span>
@@ -165,17 +170,17 @@
                 Are you sure you want to logout?
                 <div class="mt-3 d-flex justify-content-end gap-2">
                     <button class="btn btn-sm btn-secondary" data-bs-dismiss="toast">Cancel</button>
-                    <a href="../logout.php" class="btn btn-sm btn-danger">Logout</a>
+                    <a href="../actions/auth/logout.php" class="btn btn-sm btn-danger">Logout</a>
                 </div>
             </div>
         </div>
     </div>
     <script>
-function showLogoutToast() {
-    const toastEl = document.getElementById('logoutToast');
-    const toast = new bootstrap.Toast(toastEl, {
-        autohide: false
-    });
-    toast.show();
-}
+        function showLogoutToast() {
+            const toastEl = document.getElementById('logoutToast');
+            const toast = new bootstrap.Toast(toastEl, {
+                autohide: false
+            });
+            toast.show();
+        }
     </script>
